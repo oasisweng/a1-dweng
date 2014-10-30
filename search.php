@@ -42,12 +42,28 @@
         die(var_dump($e));
     }
 
-    if(!empty($_POST)) {
-        $name = $_POST['name'];
-        $email = $_POST['email'];
-        $company_name = $_POST['company_name'];
+    $name = $_POST['name'];
+    $email = $_POST['email'];
+    $company_name = $_POST['company_name'];
+    if(!empty($name)||!empty($email)||!empty($company_name)) {
         // Search data
-        $sql_search = "SELECT * FROM registration_tbl WHERE name LIKE '%".$name."%' OR email LIKE '%".$email."%' OR company_name LIKE '%".$company_name."%'";
+        $sql_search = "SELECT * FROM registration_tbl WHERE ";
+        if (!empty($name)){
+            $sql_search = $sql_search."name LIKE '%".$name."%' ";
+        } 
+        if (!empty($email)){
+            if (!empty($name)){
+                $sql_search = $sql_search."OR ";
+            }
+            $sql_search = $sql_search."email LIKE '%".$email."%' ";
+        }
+        if (!empty($company_name)){
+            if (!empty($name)||!empty($email)){
+                $sql_search = $sql_search."OR ";
+            }
+            $sql_search = $sql_search."company_name LIKE '%".$company_name."%'";
+        }
+
         $stmt = $conn->query($sql_search);
         $results = $stmt->fetchAll();
         echo "<p> Search results </p>";
@@ -57,11 +73,11 @@
             echo "<th>Email</th>";
             echo "<th>Company Name</th>";
             echo "<th>Date</th></tr>";
-            foreach($result as $results) {
-                echo "<tr><td>".$search_rs['name']."</td>";
-                echo "<td>".$search_rs['email']."</td>";
-                echo "<td>".$search_rs['company_name']."</td>";
-                echo "<td>".$search_rs['date']."</td></tr>";
+            foreach($results as $result) {
+                echo "<tr><td>".$result['name']."</td>";
+                echo "<td>".$result['email']."</td>";
+                echo "<td>".$result['company_name']."</td>";
+                echo "<td>".$result['date']."</td></tr>";
             } 
             echo "</table>";
         } else {
