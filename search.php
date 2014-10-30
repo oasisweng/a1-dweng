@@ -53,13 +53,13 @@
         } 
         if (!empty($email)){
             if (!empty($name)){
-                $sql_search = $sql_search."OR ";
+                $sql_search = $sql_search."AND ";
             }
             $sql_search = $sql_search."email LIKE '%".$email."%' ";
         }
         if (!empty($company_name)){
             if (!empty($name)||!empty($email)){
-                $sql_search = $sql_search."OR ";
+                $sql_search = $sql_search."AND ";
             }
             $sql_search = $sql_search."company_name LIKE '%".$company_name."%'";
         }
