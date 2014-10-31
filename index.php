@@ -16,6 +16,7 @@
 </style>
 </head>
 <body>
+<h1>Hello world!</h1>
 <h1>Register here!</h1>
 <p>Fill in your name ,email address and company name, then click <strong>Submit</strong> to register.</p>
 <p>You can <a href="search.php">search</a>.</p>
