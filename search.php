@@ -19,10 +19,9 @@
 <body>
 <h1>Search here!</h1>
 <p>Fill in your name ,email address and company name, then click <strong>Submit</strong> to search.</p>
+<p>Or to add <a href="index.php">new user</a>.</p>
 <form method="post" action="search.php" enctype="multipart/form-data" >
       Name  <input type="text" name="name" id="name"/></br>
-      Email <input type="text" name="email" id="email"/></br>
-      Company Name <input type="text" name="company_name" id="company_name"/></br>
       <input type="submit" name="submit" value="Search" />
 </form>
 <?php
@@ -43,26 +42,9 @@
     }
 
     $name = $_POST['name'];
-    $email = $_POST['email'];
-    $company_name = $_POST['company_name'];
-    if(!empty($name)||!empty($email)||!empty($company_name)) {
+    if(!empty($name)) {
         // Search data
-        $sql_search = "SELECT * FROM registration_tbl WHERE ";
-        if (!empty($name)){
-            $sql_search = $sql_search."name LIKE '%".$name."%' ";
-        } 
-        if (!empty($email)){
-            if (!empty($name)){
-                $sql_search = $sql_search."AND ";
-            }
-            $sql_search = $sql_search."email LIKE '%".$email."%' ";
-        }
-        if (!empty($company_name)){
-            if (!empty($name)||!empty($email)){
-                $sql_search = $sql_search."AND ";
-            }
-            $sql_search = $sql_search."company_name LIKE '%".$company_name."%'";
-        }
+        $sql_search = "SELECT * FROM registration_tbl WHERE name LIKE '%".$name."%'";
 
         $stmt = $conn->query($sql_search);
         $results = $stmt->fetchAll();
